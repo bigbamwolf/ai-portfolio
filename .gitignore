@@ -1,0 +1,5 @@
+deploy/sync.out
+deploy/sync.err
+.DS_Store
+__pycache__/
+*.pyc
