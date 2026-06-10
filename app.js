@@ -91,6 +91,13 @@
         s.metrics.forEach((m) => ul.appendChild(create("li", "", escape(m))));
         card.appendChild(ul);
       }
+      if (s.link) {
+        const a = create("a", "system-visit", "Visit site");
+        a.href = s.link;
+        a.target = "_blank";
+        a.rel = "noopener";
+        card.appendChild(a);
+      }
       wrap.appendChild(card);
     });
   }

@@ -207,6 +207,7 @@ SHIPPED_SYSTEMS = [
         "ship": "2026-06-01",
         "tagline": "Independent film creator site, 1343 films, 413 reviews, 124k words. AI predictor embedded as a member benefit.",
         "metrics": ["7 monetization models wired", "Letterboxd export to media brand"],
+        "link": "https://arwinreviews.com",
     },
     {
         "title": "Curated Archive store",
@@ -214,6 +215,7 @@ SHIPPED_SYSTEMS = [
         "ship": "2026-06-07",
         "tagline": "Fragrance decant ecommerce on Google free tier. GCash, Maya, card. PH wide shipping.",
         "metrics": ["227 item editable inventory", "Zero hosting cost"],
+        "link": "https://curated-archive.com",
     },
     {
         "title": "ARCANE device sorcerer",

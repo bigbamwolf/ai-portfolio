@@ -590,3 +590,21 @@ a.contact-value:hover { color: var(--accent); }
   .contact-row { flex-direction: column; align-items: flex-start; gap: 4px; }
   .contact-label { min-width: 0; }
 }
+
+.system-visit {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 7px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.system-visit:hover {
+  background: var(--accent);
+  color: var(--bg-1, #0b0f0c);
+}
+.system-visit::after { content: " \2197"; }
