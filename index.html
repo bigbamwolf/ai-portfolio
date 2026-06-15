@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; object-src 'none'; base-uri 'self'">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>
+(function(){var EP="https://script.google.com/macros/s/AKfycbzvfiPw3pIlPAbVY9syj8Lt3Bi2vbM-G8WIGCWxt9u9Z_MG8yGcy8He1I_sQCb-kw-dzg/exec",S="ai-portfolio-frontend";function rep(p){try{fetch(EP,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify(Object.assign({route:"sentry_log",source:S},p))})}catch(e){}}window.addEventListener("error",function(e){rep({message:String(e.message||"err"),stack:String((e.error&&e.error.stack)||""),url:location.href,ua:navigator.userAgent,type:"error"})});window.addEventListener("unhandledrejection",function(e){rep({message:String((e.reason&&e.reason.message)||e.reason||"reject"),stack:String((e.reason&&e.reason.stack)||""),url:location.href,ua:navigator.userAgent,type:"reject"})})})();
+</script>
 <meta name="description" content="Arwin Edward M. Bagaslao, AI engineer building multi agent systems in production. 47 plus specialized agents, an 11 rampart finance OS, a live forex bot with supervisor, and an RPA pipeline that moves real payroll money." />
 <meta name="theme-color" content="#0a0a0a" />
 <title>Arwin Bagaslao, AI Engineer Portfolio</title>
