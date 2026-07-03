@@ -1,9 +1,3 @@
-# Pending workflow file. To enable GitHub Actions auto deploy:
-#   1. gh auth refresh -s workflow
-#   2. mkdir -p .github/workflows
-#   3. cp deploy/_pending_workflow_deploy.yml .github/workflows/deploy.yml
-#   4. git add .github && git commit -m "enable Actions deploy" && git push
-# Then in repo Settings > Pages, switch source from "branch" to "GitHub Actions".
 name: Deploy ai-portfolio to GitHub Pages
 
 on:
@@ -39,4 +33,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
