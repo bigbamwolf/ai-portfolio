@@ -24,7 +24,7 @@ def utcnow_iso() -> str:
 
 def count_agents() -> tuple[int, list[dict]]:
     agents = []
-    for path in sorted(AGENTS_DIR.glob("*.md")):
+    for path in sorted(AGENTS_DIR.rglob("*.md")):
         name = path.stem
         try:
             text = path.read_text(encoding="utf-8", errors="ignore")
