@@ -680,7 +680,31 @@ def get_shipped_count() -> int:
     return max(0, len(rows) - 1)
 
 
+BRAIN_DIR = ROOT / "brain"
+
+
+def read_json(path, default=None):
+    try:
+        return json.loads(Path(path).read_text())
+    except Exception:
+        return default
+
+
+def load_brain() -> dict:
+    global BRAIN_REGIONS, EMPTY_SEATS
+    reg = read_json(BRAIN_DIR / "regions.json")
+    if reg:
+        BRAIN_REGIONS, EMPTY_SEATS = reg["regions"], reg.get("empty_seats", [])
+    live = read_json(BRAIN_DIR / "stats.json", {}) or {}
+    mode = (read_json(BRAIN_DIR / "mode.json", {}) or {}).get("mode", "shadow")
+    per_region = live.get("per_region", {})
+    for r in BRAIN_REGIONS:
+        r["routed_7d"] = per_region.get(r["region"], 0)
+    return {"mode": mode, "backtest": read_json(BRAIN_DIR / "backtest.json"), "live": live}
+
+
 def main() -> None:
+    brain = load_brain()
     agent_count, agent_list = count_agents()
     wired_regions = len(BRAIN_REGIONS)
     empty_seats = len(EMPTY_SEATS)
@@ -722,6 +746,7 @@ def main() -> None:
             "shipped_systems": shipped_systems,
         },
         "headliners": [h.format(shipped=shipped_systems, agents=agent_count) for h in HEADLINERS],
+        "brain": brain,
         "brain_regions": BRAIN_REGIONS,
         "empty_seats": EMPTY_SEATS,
         "citadel_ramparts": CITADEL_RAMPARTS,

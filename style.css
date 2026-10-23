@@ -679,3 +679,12 @@ a.contact-value:hover { color: var(--accent); }
 #systems-grid .system-drawer { margin-bottom: 0; }
 #systems-grid .system-drawer[open] { grid-column: 1 / -1; }
 @media (max-width: 900px) { #systems-grid { grid-template-columns: 1fr; } }
+
+/* Brain stats */
+.brain-stats { border: 1px solid var(--line); border-radius: 10px; background: var(--bg-2); margin: 0 0 24px; }
+.brain-stat { display: grid; grid-template-columns: 220px 1fr; gap: 14px; padding: 12px 18px; border-bottom: 1px solid var(--line); font-size: 14px; }
+.brain-stat:last-child { border-bottom: 0; }
+.brain-stat-k { font-family: var(--mono); font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; padding-top: 2px; }
+.brain-stat-v { color: var(--ink); }
+.brain-routed { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-top: 8px; }
+@media (max-width: 640px) { .brain-stat { grid-template-columns: 1fr; gap: 4px; } }

@@ -34,7 +34,7 @@
 
     const stats = [
       { num: data.counters.agents, label: "Agents" },
-      { num: data.counters.brain_regions_wired, label: "Brain regions" },
+      { num: data.brain && data.brain.backtest ? Math.round(data.brain.backtest.route_accuracy * 100) + "%" : data.counters.brain_regions_wired, label: data.brain && data.brain.backtest ? "Routing accuracy" : "Brain regions" },
       { num: data.counters.citadel_ramparts_live + "/" + data.counters.citadel_ramparts_total, label: "CITADEL live" },
       { num: data.counters.shipped_systems, label: "Shipped systems" },
     ];
@@ -161,6 +161,7 @@
         card.appendChild(a);
       }
       if (r.notes) card.appendChild(create("div", "brain-notes", escape(r.notes)));
+      if (r.routed_7d) card.appendChild(create("div", "brain-routed", r.routed_7d + " prompts routed this week"));
       wrap.appendChild(card);
     });
     const seatWrap = $("#seats-grid");
@@ -171,6 +172,28 @@
       card.appendChild(create("div", "seat-role", escape(s.role)));
       card.appendChild(create("div", "seat-purpose", escape(s.purpose)));
       seatWrap.appendChild(card);
+    });
+  }
+
+  function hydrateBrainStats(b) {
+    const wrap = $("#brain-stats");
+    if (!wrap || !b) return;
+    const pct = (x) => (x == null ? "n/a" : Math.round(x * 100) + "%");
+    const bt = b.backtest || {};
+    const live = b.live || {};
+    const rows = [
+      ["Mode", b.mode === "live" ? "live, routing and recall injected into every prompt" : "shadow, logging every decision before it is trusted to act"],
+      ["Routing accuracy", pct(bt.route_accuracy) + " on " + (bt.prompts || 0).toLocaleString() + " replayed real prompts"],
+      ["Memory recall hit rate", pct(bt.recall_hit_rate) + " of prompts where a memory was needed"],
+      ["Prompts seen this week", (live.prompts || 0).toLocaleString() + (live.avg_ms ? ", " + live.avg_ms + " ms average" : "")],
+      ["Cost per prompt", "0 model calls, keyword and BM25 scoring only"],
+    ];
+    wrap.innerHTML = "";
+    rows.forEach(([k, v]) => {
+      const row = create("div", "brain-stat");
+      row.appendChild(create("span", "brain-stat-k", escape(k)));
+      row.appendChild(create("span", "brain-stat-v", escape(v)));
+      wrap.appendChild(row);
     });
   }
 
@@ -237,6 +260,7 @@
     hydrateSystems(data.shipped_systems, data.system_categories);
     hydrateCitadel(data.citadel_ramparts);
     hydrateBrain(data.brain_regions, data.empty_seats);
+    hydrateBrainStats(data.brain);
     hydrateAgents(data.agents);
     hydrateStack(data.tech_stack);
 
