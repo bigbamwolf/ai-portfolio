@@ -614,7 +614,7 @@ a.contact-value:hover { color: var(--accent); }
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--bg-2);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   transition: border-color 0.2s ease;
 }
 .system-drawer[open], .system-drawer:hover { border-color: var(--accent); }
@@ -625,13 +625,14 @@ a.contact-value:hover { color: var(--accent); }
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 20px 22px;
+  padding: 14px 20px;
 }
 .drawer-head::-webkit-details-marker { display: none; }
 .drawer-text { min-width: 0; }
-.drawer-title { font-size: 19px; font-weight: 600; margin: 0; color: var(--ink); }
-.drawer-blurb { color: var(--ink-dim); font-size: 14px; margin: 6px 0 0; }
+.drawer-title { font-size: 17px; font-weight: 600; margin: 0; color: var(--ink); }
+.drawer-blurb { color: var(--ink-dim); font-size: 13px; margin: 4px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .drawer-peek {
+  display: none;
   font-family: var(--mono);
   font-size: 11px;
   color: var(--ink-dim);
@@ -662,7 +663,8 @@ a.contact-value:hover { color: var(--accent); }
 .system-drawer[open] .drawer-icon { transform: rotate(45deg); }
 .drawer-body { padding: 0 22px 22px; }
 @media (max-width: 640px) {
-  .drawer-head { padding: 16px; align-items: flex-start; }
+  .drawer-head { padding: 12px 14px; align-items: center; }
+  .drawer-blurb { display: none; }
   .drawer-body { padding: 0 16px 16px; grid-template-columns: 1fr; }
   .drawer-count { display: none; }
 }
@@ -673,3 +675,7 @@ a.contact-value:hover { color: var(--accent); }
 .stack-kind { font-family: var(--mono); font-size: 12px; color: var(--accent); padding-top: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
 .stack-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 @media (max-width: 640px) { .stack-row { grid-template-columns: 1fr; gap: 6px; } }
+#systems-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: row dense; gap: 8px; align-items: start; }
+#systems-grid .system-drawer { margin-bottom: 0; }
+#systems-grid .system-drawer[open] { grid-column: 1 / -1; }
+@media (max-width: 900px) { #systems-grid { grid-template-columns: 1fr; } }

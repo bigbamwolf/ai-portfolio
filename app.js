@@ -108,7 +108,6 @@
       const items = list.filter((s) => (s.category || "All systems") === g.name);
       if (!items.length) return;
       const drawer = create("details", "system-drawer");
-      if (i === 0) drawer.open = true;
       const sum = create("summary", "drawer-head");
       const text = create("div", "drawer-text");
       text.appendChild(create("h3", "drawer-title",
@@ -124,6 +123,12 @@
       const grid = create("div", "systems-grid drawer-body");
       items.forEach((s) => grid.appendChild(systemCard(s)));
       drawer.appendChild(grid);
+      drawer.addEventListener("toggle", () => {
+        if (!drawer.open) return;
+        wrap.querySelectorAll(".system-drawer[open]").forEach((d) => { if (d !== drawer) d.open = false; });
+        const top = drawer.getBoundingClientRect().top;
+        if (top < 60) window.scrollBy({ top: top - 70, behavior: "smooth" });
+      });
       wrap.appendChild(drawer);
     });
   }
