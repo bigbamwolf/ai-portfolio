@@ -60,7 +60,7 @@ BRAIN_REGIONS = [
     {
         "region": "AMYGDALA",
         "role": "Threat detection, refusal reflex",
-        "agents": ["nerve", "security-auditor", "cutsmith-warden", "incident-responder"],
+        "agents": ["nerve", "security-auditor", "cutsmith-warden"],
     },
     {
         "region": "CORPUS CALLOSUM",
@@ -134,12 +134,12 @@ BRAIN_REGIONS = [
     {
         "region": "LANGUAGE CENTER",
         "role": "Broca and Wernicke",
-        "agents": ["siren", "sensei", "legal-advisor"],
+        "agents": ["siren", "sensei"],
     },
     {
         "region": "SPECIALIZED NEOCORTEX",
         "role": "Domain expert circuits",
-        "agents": ["pse-trader", "crypto-trader", "gabfx-trader", "gabfx-manager", "trader-dgm", "curated-archive-tiktoker", "curated-archive-shopee", "curated-archive-lazada", "curated-archive-website", "curated-archive-cs", "data-scientist", "quant-analyst", "payment-integration", "seo-authority-builder", "seo-cannibalization-detector", "seo-content-auditor", "seo-content-planner", "seo-content-refresher", "seo-content-writer", "seo-keyword-strategist", "seo-meta-optimizer", "seo-snippet-hunter", "seo-structure-architect"],
+        "agents": ["pse-trader", "crypto-trader", "gabfx-trader", "gabfx-manager", "trader-dgm", "curated-archive-tiktoker", "curated-archive-shopee", "curated-archive-lazada", "curated-archive-website", "curated-archive-cs"],
     },
 ]
 
