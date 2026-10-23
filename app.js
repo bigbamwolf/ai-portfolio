@@ -54,7 +54,9 @@
       "",
       "[ STATUS ]  online",
       "[ ROLE   ]  founder, CFO, AI engineer",
-      "[ STACK  ]  python, apps script, MCP, streamlit, claude SDK",
+      "[ STACK  ]  python, apps script, playwright, streamlit,",
+      "            claude code, MCP, codex, gemini vision",
+      "[ SHIPPED]  " + data.counters.shipped_systems + " systems in production",
       "[ AGENTS ]  " + data.counters.agents + " specialized",
       "[ BRAIN  ]  " + data.counters.brain_regions_wired + " wired, " + data.counters.brain_seats_empty + " reserved",
       "[ CITADEL]  " + data.counters.citadel_ramparts_live + "/" + data.counters.citadel_ramparts_total + " ramparts live",
@@ -195,10 +197,21 @@
   function hydrateStack(list) {
     const wrap = $("#stack-grid");
     wrap.innerHTML = "";
-    list.forEach((t) => {
-      const chip = create("span", "stack-chip", escape(t.label));
-      chip.setAttribute("data-kind", t.kind);
-      wrap.appendChild(chip);
+    const names = { core: "Languages", ai: "AI and agents", automation: "Automation", data: "Data and APIs",
+      deploy: "Deploy", trading: "Trading", iot: "Devices and IoT", fintech: "Fintech" };
+    const kinds = [];
+    list.forEach((t) => { if (!kinds.includes(t.kind)) kinds.push(t.kind); });
+    kinds.forEach((k) => {
+      const row = create("div", "stack-row");
+      row.appendChild(create("div", "stack-kind", escape(names[k] || k)));
+      const chips = create("div", "stack-chips");
+      list.filter((t) => t.kind === k).forEach((t) => {
+        const chip = create("span", "stack-chip", escape(t.label));
+        chip.setAttribute("data-kind", t.kind);
+        chips.appendChild(chip);
+      });
+      row.appendChild(chips);
+      wrap.appendChild(row);
     });
   }
 

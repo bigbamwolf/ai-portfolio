@@ -24,7 +24,7 @@ def utcnow_iso() -> str:
 
 def count_agents() -> tuple[int, list[dict]]:
     agents = []
-    for path in sorted(AGENTS_DIR.rglob("*.md")):
+    for path in sorted(AGENTS_DIR.glob("*.md")):
         name = path.stem
         try:
             text = path.read_text(encoding="utf-8", errors="ignore")
@@ -60,12 +60,12 @@ BRAIN_REGIONS = [
     {
         "region": "AMYGDALA",
         "role": "Threat detection, refusal reflex",
-        "agents": ["nerve", "security-auditor", "cutsmith-warden"],
+        "agents": ["nerve", "security-auditor", "cutsmith-warden", "incident-responder"],
     },
     {
         "region": "CORPUS CALLOSUM",
         "role": "Cross hemisphere bridge",
-        "agents": [],
+        "agents": ["curated-archive-stockroom"],
         "notes": "knowledge_bus.jsonl, session mesh, SessionStart hook",
     },
     {
@@ -76,13 +76,13 @@ BRAIN_REGIONS = [
     {
         "region": "BASAL GANGLIA",
         "role": "Learned habits, routines",
-        "agents": [],
+        "agents": ["disk-janitor", "drive-janitor", "bir-watch", "portal-health"],
         "notes": "launchd crons, Stop hook, SessionStart hook, weekly DGM consolidator",
     },
     {
         "region": "BRAIN STEM",
         "role": "Autonomic survival",
-        "agents": ["phoenix"],
+        "agents": ["phoenix", "crypto-trader-manager", "marquee-manager"],
         "notes": "gabfx watchdog, keepalive.sh, phoenix heartbeat every 10 min",
     },
     {
@@ -94,25 +94,25 @@ BRAIN_REGIONS = [
     {
         "region": "VTA / NUCLEUS ACCUMBENS",
         "role": "Reward circuit",
-        "agents": [],
+        "agents": ["hype-scout"],
         "notes": "Proven Ledger, DGM promotion path",
     },
     {
         "region": "NIGHT CONSOLIDATION",
         "role": "Replay, weekly sweep",
-        "agents": [],
+        "agents": ["prompt-engineer"],
         "notes": "DGM Saturday consolidator, weekly bloat sweep, weekly hedging audit",
     },
     {
         "region": "OPTIC / AUDITORY CORTEX",
         "role": "Input streams",
         "agents": ["watcher"],
-        "notes": "computer-use MCP, claude-in-chrome MCP",
+        "notes": "Playwright, Chrome DevTools Protocol, Gemini vision, screen recorder",
     },
     {
         "region": "FUSIFORM FACE AREA",
         "role": "Identity recognition",
-        "agents": [],
+        "agents": ["juice-meter", "logo-hunter"],
         "notes": "Beneficiaries DB lookup, supplier identity match, name disambiguation rule",
     },
     {
@@ -123,12 +123,12 @@ BRAIN_REGIONS = [
     {
         "region": "MOTOR CORTEX",
         "role": "Direct action, execution",
-        "agents": ["appsbuilder", "arcane", "canva"],
+        "agents": ["appsbuilder", "arcane", "canva", "secsender", "secbatch", "marquee", "reel", "frontend-design", "tiktok-review-replier"],
     },
     {
         "region": "PARIETAL LOBE",
         "role": "Spatial attention",
-        "agents": [],
+        "agents": ["tabi", "kia-expert"],
         "notes": "FOREMAN docket focus, two ordering presentation rule",
     },
     {
@@ -139,7 +139,7 @@ BRAIN_REGIONS = [
     {
         "region": "SPECIALIZED NEOCORTEX",
         "role": "Domain expert circuits",
-        "agents": ["pse-trader", "crypto-trader", "gabfx-trader", "gabfx-manager", "trader-dgm"],
+        "agents": ["pse-trader", "crypto-trader", "gabfx-trader", "gabfx-manager", "trader-dgm", "curated-archive-tiktoker", "curated-archive-shopee", "curated-archive-lazada", "curated-archive-website", "curated-archive-cs", "data-scientist", "quant-analyst", "payment-integration", "seo-authority-builder", "seo-cannibalization-detector", "seo-content-auditor", "seo-content-planner", "seo-content-refresher", "seo-content-writer", "seo-keyword-strategist", "seo-meta-optimizer", "seo-snippet-hunter", "seo-structure-architect"],
     },
 ]
 
@@ -155,15 +155,24 @@ CITADEL_RAMPARTS = [
     {"name": "Core", "phase": "1", "status": "LIVE", "desc": "Finance OS shell, CFO only access, 11 module nav"},
     {"name": "REGISTRY", "phase": "2", "status": "LIVE", "desc": "Supplier and beneficiary registry, empire wide name disambiguation"},
     {"name": "VAULT", "phase": "3", "status": "LIVE", "desc": "Document and EWT vault, supplier initiated tax workflow"},
-    {"name": "SEAL", "phase": "4", "status": "DESIGN", "desc": "Auto BIR 2307 issuance, supplier initiated, dual signature pad"},
+    {"name": "SEAL", "phase": "4", "status": "LIVE", "desc": "Auto BIR 2307 issuance from the supplier portal with a public verify page"},
     {"name": "RECON", "phase": "5", "status": "LIVE", "desc": "Reconciliation, auto cross checks transactions against source"},
     {"name": "LEDGER", "phase": "6", "status": "PARTIAL", "desc": "Folders, OT, leave, reimbursement, disbursement live. Payroll compute pending"},
     {"name": "SANCTUM", "phase": "7", "status": "LIVE", "desc": "CFO eyes only layer. Equity, cap table, sensitive comp, car loan alert"},
     {"name": "GATE", "phase": "8", "status": "LIVE", "desc": "Multi level approval chains without third party software"},
-    {"name": "Petty Cash", "phase": "9", "status": "LIVE", "desc": "Daily 7am PHT email digest, fully autonomous"},
+    {"name": "Petty Cash", "phase": "9", "status": "LIVE", "desc": "Float register, submissions and one click email approvals"},
     {"name": "Payroll Bridge", "phase": "10", "status": "LIVE", "desc": "Auto fires 10th and 25th, validates payees, alerts CEO"},
-    {"name": "COMPLIANCE", "phase": "11", "status": "DESIGN", "desc": "Supplier accreditation rampart, design Qs pending"},
+    {"name": "COMPLIANCE", "phase": "11", "status": "LIVE", "desc": "Supplier accreditation portal, expiry driven blocking on permits and ITR"},
 ]
+
+def film_count() -> int:
+    try:
+        return len(json.loads((ROOT / "letterboxd-truth" / "truth.json").read_text())["films"])
+    except Exception:
+        return 1599
+
+
+FILM_COUNT = film_count()
 
 SHIPPED_SYSTEMS = [
     {
@@ -175,9 +184,9 @@ SHIPPED_SYSTEMS = [
     },
     {
         "title": "InstaPay batch pipeline",
-        "stack": "Python, Chrome MCP, AppleScript",
+        "stack": "Python, Playwright, Chrome DevTools Protocol, AppleScript",
         "ship": "2026-05-12",
-        "tagline": "RPA on a banking UI that has no public API. Moves real payroll money with dry run mandatory and halt on ambiguity.",
+        "tagline": "RPA on a banking UI that has no public API. Moves real payroll money with a readback gate, duplicate guard and halt on ambiguity.",
         "metrics": ["End to end .txt to Payment Confirmation drafts", "BIC validation against seeded wallets"],
     },
     {
@@ -205,16 +214,16 @@ SHIPPED_SYSTEMS = [
         "title": "ARWIN REVIEWS",
         "stack": "Python build, vanilla JS, launchd + GitHub Action autosync",
         "ship": "2026-06-01",
-        "tagline": "Independent film creator site, 1343 films, 413 reviews, 124k words. AI predictor embedded as a member benefit.",
+        "tagline": f"Independent film creator site, {FILM_COUNT:,} films rated, 400+ written reviews. AI predictor embedded as a member benefit.",
         "metrics": ["7 monetization models wired", "Letterboxd export to media brand"],
         "link": "https://arwinreviews.com",
     },
     {
         "title": "Curated Archive store",
-        "stack": "Apps Script, Sheets, Xendit",
+        "stack": "Apps Script, Sheets, Xendit, GitHub Pages",
         "ship": "2026-06-07",
         "tagline": "Fragrance decant ecommerce on Google free tier. GCash, Maya, card. PH wide shipping.",
-        "metrics": ["227 item editable inventory", "Zero hosting cost"],
+        "metrics": ["283 product catalog, 1,121 SKUs, the price origin for 3 marketplaces", "Zero hosting cost"],
         "link": "https://curated-archive.com",
     },
     {
@@ -263,7 +272,7 @@ SHIPPED_SYSTEMS = [
     {
         "title": "CITADEL Finance OS",
         "stack": "Apps Script, Sheets, Drive, Gmail, 287 files, 80k lines",
-        "ship": "8 of 11 ramparts live",
+        "ship": "10 of 11 ramparts live",
         "tagline": "A custom ERP built by AI on Google free tier. Beneficiaries registry, approvals, ledger, petty cash, payroll bridge, CFO only layer, sealed bank perimeter, full audit trail.",
         "metrics": ["Multi level approval chains with no third party software", "Single source of truth registry across every money flow"],
     },
@@ -564,19 +573,33 @@ TECH_STACK = [
     {"label": "Streamlit", "kind": "core"},
     {"label": "JavaScript", "kind": "core"},
     {"label": "HTML / CSS", "kind": "core"},
+    {"label": "Swift (macOS)", "kind": "core"},
+    {"label": "Claude Code (hooks, plugins, subagents)", "kind": "ai"},
+    {"label": "Claude headless CLI", "kind": "ai"},
     {"label": "MCP (Model Context Protocol)", "kind": "ai"},
-    {"label": "Claude Code SDK", "kind": "ai"},
     {"label": "Multi agent orchestration", "kind": "ai"},
+    {"label": "Codex CLI", "kind": "ai"},
+    {"label": "Gemini vision", "kind": "ai"},
+    {"label": "ArcFace face embeddings", "kind": "ai"},
     {"label": "RAG patterns", "kind": "ai"},
-    {"label": "Chrome MCP / browser automation", "kind": "automation"},
+    {"label": "Playwright", "kind": "automation"},
+    {"label": "Chrome DevTools Protocol", "kind": "automation"},
+    {"label": "agent-browser / browser-use", "kind": "automation"},
     {"label": "AppleScript", "kind": "automation"},
     {"label": "launchd", "kind": "automation"},
     {"label": "GitHub Actions", "kind": "automation"},
+    {"label": "ffmpeg", "kind": "automation"},
+    {"label": "PIL image rendering", "kind": "automation"},
     {"label": "Google Sheets API", "kind": "data"},
     {"label": "Drive API", "kind": "data"},
-    {"label": "Gmail API", "kind": "data"},
+    {"label": "Gmail API and IMAP", "kind": "data"},
     {"label": "Calendar API", "kind": "data"},
+    {"label": "OMDb API", "kind": "data"},
+    {"label": "GitHub Pages", "kind": "deploy"},
+    {"label": "Cloudflare", "kind": "deploy"},
+    {"label": "PWA and Android TWA", "kind": "deploy"},
     {"label": "MetaTrader 5 (EA)", "kind": "trading"},
+    {"label": "Binance and PSE market data", "kind": "trading"},
     {"label": "Tizen WebSocket", "kind": "iot"},
     {"label": "Wake on LAN", "kind": "iot"},
     {"label": "Kia Connect telematics", "kind": "iot"},
@@ -595,7 +618,7 @@ HEADLINERS = [
     "Self healing ops: failed jobs are auto filed and auto fixed, zombie processes reaped, heavy jobs queued on an 8GB machine",
     "PHOENIX persistent runner: long tasks survive usage limits and context resets until DONE",
     "Live trading bots with supervisor agents and watchdogs that catch derailment, not just crashes",
-    "ARWIN REVIEWS: 1343 film media brand with an AI predictor, review cards and cross posting on autopilot",
+    f"ARWIN REVIEWS: {FILM_COUNT:,} film media brand with an AI predictor, review cards and cross posting on autopilot",
 ]
 
 

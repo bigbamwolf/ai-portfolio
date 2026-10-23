@@ -666,3 +666,10 @@ a.contact-value:hover { color: var(--accent); }
   .drawer-body { padding: 0 16px 16px; grid-template-columns: 1fr; }
   .drawer-count { display: none; }
 }
+
+/* Stack rows */
+.stack-grid { display: flex; flex-direction: column; gap: 14px; }
+.stack-row { display: grid; grid-template-columns: 160px 1fr; gap: 14px; align-items: start; }
+.stack-kind { font-family: var(--mono); font-size: 12px; color: var(--accent); padding-top: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+.stack-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 640px) { .stack-row { grid-template-columns: 1fr; gap: 6px; } }
