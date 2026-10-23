@@ -218,6 +218,21 @@ SHIPPED_SYSTEMS = [
         "link": "https://curated-archive.com",
     },
     {
+        "title": "GRIDDLE, food cart operating system",
+        "stack": "Apps Script, Sheets, Drive, HtmlService",
+        "ship": "2026-09",
+        "tagline": "Runs a food cart business end to end from a phone. Shift open, close and remit, variance math, spend book, request and approval gate, bank recon, owner dashboard.",
+        "metrics": ["Phone first crew screens, no Google account needed", "Auto alerts on cash variance, late remit and big spends", "Every delete logged for full rebuild"],
+    },
+    {
+        "title": "PABAON order site",
+        "stack": "Vanilla JS, PWA, GitHub Pages",
+        "ship": "2026-10-23",
+        "tagline": "Online ordering storefront for a kare kare brand. Cart, delivery or pick up, GCash checkout, installable on the phone.",
+        "metrics": ["Installable PWA", "Zero hosting cost"],
+        "link": "https://bigbamwolf.github.io/pabaon/",
+    },
+    {
         "title": "ARCANE device sorcerer",
         "stack": "Python, Tizen WebSocket, Wake on LAN, Kia Connect via region workaround",
         "ship": "2026-06-01",
