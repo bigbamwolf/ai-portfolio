@@ -586,16 +586,16 @@ TECH_STACK = [
 ]
 
 HEADLINERS = [
-    "Multi agent orchestration: 47+ specialized agents wired across 18 brain regions",
-    "CITADEL Finance OS: 11 ramparts live on Google free tier, a custom ERP built by AI",
-    "PHOENIX persistent runner: tasks survive usage limits and context resets",
-    "Live MT5 forex bot with supervisor agent and watchdog reconciliation",
-    "InstaPay batch pipeline: RPA on a banking UI with no public API",
-    "DGM self evolving loop: trading lessons auto promote to permanent memory weekly",
-    "Session Mesh + Knowledge Bus: cross session continuity with zero server",
-    "ARCANE device sorcery: TV, router, and car orchestrated across three vendor APIs",
-    "ARWIN REVIEWS: 1343 film corpus, AI predictor, 7 monetization models",
-    "NERVE overcaution watchdog: Denial Lock against false capability denials",
+    "{shipped} systems in production across finance, ecommerce, sales, media and trading, not demos",
+    "{agents} specialized agents orchestrated across an 18 region brain map, each with a single owned job",
+    "Moves real payroll and supplier money end to end through a bank UI with no public API, with readback gates and duplicate send guards",
+    "CITADEL Finance OS: an 80k line custom ERP on Google free tier, approvals, ledger, payroll and a sealed bank perimeter",
+    "Event driven 4 channel stock sync: one sale on any channel converts to ml and updates the other three",
+    "Replaced paid SaaS with free self hosted tools: lead database, email engine, document signing, BIR certificate generator",
+    "Self healing ops: failed jobs are auto filed and auto fixed, zombie processes reaped, heavy jobs queued on an 8GB machine",
+    "PHOENIX persistent runner: long tasks survive usage limits and context resets until DONE",
+    "Live trading bots with supervisor agents and watchdogs that catch derailment, not just crashes",
+    "ARWIN REVIEWS: 1343 film media brand with an AI predictor, review cards and cross posting on autopilot",
 ]
 
 
@@ -629,16 +629,19 @@ def main() -> None:
         "owner": {
             "name": "Arwin Edward M. Bagaslao",
             "callsign": "Boss",
-            "headline": "AI Engineer building multi agent systems in production",
+            "headline": "AI Engineer shipping production multi agent systems that run real businesses",
             "location": "Asia / Manila (PHT)",
             "email": "arwinbagaslao@gmail.com",
             "summary": (
-                "Founder and CFO who builds AI systems end to end. "
-                "47+ specialized agents wired across an 18 region brain map, "
-                "an 11 rampart finance OS on Google free tier, "
-                "a live forex bot with supervisor and watchdog, "
-                "a persistent task runner that survives context death, "
-                "and an RPA pipeline that moves real payroll money through a banking UI with no public API."
+                f"I build AI systems that run real businesses, not demos. "
+                f"{shipped_systems} systems in production across finance, ecommerce, sales and media, "
+                f"orchestrated by {agent_count} specialized agents. "
+                "My code moves real payroll and supplier money through a bank with no public API, "
+                "runs an 80k line finance ERP on Google free tier, "
+                "built event driven stock sync across four sales channels, "
+                "and heals its own scheduler when jobs fail. "
+                "I own the whole loop, from the business problem to the deployed and monitored system, "
+                "and I replace paid SaaS with tools that cost nothing to run."
             ),
         },
         "counters": {
@@ -649,7 +652,7 @@ def main() -> None:
             "citadel_ramparts_total": citadel_total,
             "shipped_systems": shipped_systems,
         },
-        "headliners": HEADLINERS,
+        "headliners": [h.format(shipped=shipped_systems, agents=agent_count) for h in HEADLINERS],
         "brain_regions": BRAIN_REGIONS,
         "empty_seats": EMPTY_SEATS,
         "citadel_ramparts": CITADEL_RAMPARTS,
