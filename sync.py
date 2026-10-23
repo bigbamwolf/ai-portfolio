@@ -599,6 +599,51 @@ HEADLINERS = [
 ]
 
 
+SYSTEM_CATEGORIES = [
+    ("Finance and payments", "Real money moved through banks with no public API, tax and receipts on autopilot.", [
+        "InstaPay batch pipeline", "SECSENDER single payment sender", "Payroll Bridge", "Messenger Bridge",
+        "SecBank batch generator", "Grab invoice automation", "BIR 2307 generator + landing site", "BIR Watch", "OR/SI Drive sync"]),
+    ("Business platforms and portals", "ERP, staff and supplier portals that run two companies day to day.", [
+        "CITADEL Finance OS", "Pixelens Employee Portal", "Supplier billing portal", "Supplier accreditation portal",
+        "Petty Cash module", "Manning Builder", "GRIDDLE, food cart operating system", "A&D Employee Portal + Android app"]),
+    ("Ecommerce", "A four channel fragrance store and a food ordering site, with AI on the buy and sell side.", [
+        "Curated Archive store", "Curated Archive stock sync", "Juice Meter + Deal Meter", "SCOUT demand scout",
+        "Shopee blacklist watch", "PABAON order site"]),
+    ("Sales and lead generation", "Self hosted replacements for paid lead tools, plus inbound lead magnets.", [
+        "Pixelens Hunter", "Pixelens Lead Engine", "Pixelens Reddit lead scanner", "Client Engine + Automation Audit", "Site promo scheduler"]),
+    ("Media and content", "A film media brand and creative pipelines that publish on their own.", [
+        "ARWIN REVIEWS", "MARQUEE review cross poster", "REEL review card renderer", "Letterboxd growth engine",
+        "Watch scheduler", "Cutsmith video pipeline", "CANVA design agent"]),
+    ("AI agents and orchestration", "The multi agent layer: memory, persistence, routing, self evolution and guardrails.", [
+        "PHOENIX, persistent task runner", "DGM self evolving agent loop", "Session Mesh + Knowledge Bus", "RELAY model ladder",
+        "CERBERUS browser ladder", "FOREMAN production manager", "NERVE overcaution watchdog", "Watcher", "EXODUS + ARK",
+        "ARCANE device sorcerer", "WRENCH car expert", "Face search", "Birthday alerter"]),
+    ("Trading", "Signal agents and live bots, each with a supervisor that catches derailment.", [
+        "GAB FX live forex bot + supervisor", "PSE trader + PH Stocks", "Crypto trader paper bot + manager"]),
+    ("Infrastructure and reliability", "Self healing ops that keep everything above running on one 8GB laptop.", [
+        "Empire infrastructure"]),
+    ("Websites", "Agency, funnel, product and client sites.", [
+        "Pixelens website", "Forex Funnel sites", "Client and product sites"]),
+]
+
+
+def categorize_systems() -> tuple[list[dict], list[dict]]:
+    by_title = {s["title"]: s for s in SHIPPED_SYSTEMS}
+    ordered, groups, seen = [], [], set()
+    for name, blurb, titles in SYSTEM_CATEGORIES:
+        items = [by_title[t] for t in titles if t in by_title]
+        for item in items:
+            ordered.append({**item, "category": name})
+            seen.add(item["title"])
+        groups.append({"name": name, "blurb": blurb, "count": len(items)})
+    leftovers = [s for s in SHIPPED_SYSTEMS if s["title"] not in seen]
+    if leftovers:
+        print("  uncategorized:", ", ".join(s["title"] for s in leftovers))
+        ordered += [{**s, "category": "Other"} for s in leftovers]
+        groups.append({"name": "Other", "blurb": "", "count": len(leftovers)})
+    return ordered, groups
+
+
 def get_shipped_count() -> int:
     """Count Lane shipped items by scanning DOCKET.md for the shipped section."""
     docket = PROD_MGR / "DOCKET.md"
@@ -619,6 +664,7 @@ def main() -> None:
     citadel_live = sum(1 for r in CITADEL_RAMPARTS if r["status"] == "LIVE")
     citadel_total = len(CITADEL_RAMPARTS)
     shipped_systems = len(SHIPPED_SYSTEMS)
+    systems_ordered, system_categories = categorize_systems()
 
     data = {
         "meta": {
@@ -656,7 +702,8 @@ def main() -> None:
         "brain_regions": BRAIN_REGIONS,
         "empty_seats": EMPTY_SEATS,
         "citadel_ramparts": CITADEL_RAMPARTS,
-        "shipped_systems": SHIPPED_SYSTEMS,
+        "shipped_systems": systems_ordered,
+        "system_categories": system_categories,
         "agents": agent_list,
         "tech_stack": TECH_STACK,
     }

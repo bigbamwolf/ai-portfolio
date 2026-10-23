@@ -36,7 +36,7 @@
       { num: data.counters.agents, label: "Agents" },
       { num: data.counters.brain_regions_wired, label: "Brain regions" },
       { num: data.counters.citadel_ramparts_live + "/" + data.counters.citadel_ramparts_total, label: "CITADEL live" },
-      { num: data.counters.shipped_systems, label: "Featured systems" },
+      { num: data.counters.shipped_systems, label: "Shipped systems" },
     ];
     const ul = $("#hero-stats");
     ul.innerHTML = "";
@@ -75,30 +75,54 @@
     }[c]));
   }
 
-  function hydrateSystems(list) {
+  function systemCard(s) {
+    const card = create("article", "system-card");
+    card.appendChild(create("h3", "system-title", escape(s.title)));
+    card.appendChild(create("p", "system-tagline", escape(s.tagline)));
+    const meta = create("div", "system-meta");
+    meta.appendChild(create("span", "chip", escape(s.stack)));
+    meta.appendChild(create("span", "chip chip-ship", "ship: " + escape(s.ship)));
+    card.appendChild(meta);
+    if (s.metrics && s.metrics.length) {
+      const ul = create("ul", "system-metrics");
+      s.metrics.forEach((m) => ul.appendChild(create("li", "", escape(m))));
+      card.appendChild(ul);
+    }
+    if (s.link) {
+      const a = create("a", "system-visit", "Visit site");
+      a.href = s.link;
+      a.target = "_blank";
+      a.rel = "noopener";
+      card.appendChild(a);
+    }
+    return card;
+  }
+
+  function hydrateSystems(list, cats) {
     const wrap = $("#systems-grid");
     wrap.innerHTML = "";
-    list.forEach((s) => {
-      const card = create("article", "system-card");
-      card.appendChild(create("h3", "system-title", escape(s.title)));
-      card.appendChild(create("p", "system-tagline", escape(s.tagline)));
-      const meta = create("div", "system-meta");
-      meta.appendChild(create("span", "chip", escape(s.stack)));
-      meta.appendChild(create("span", "chip chip-ship", "ship: " + escape(s.ship)));
-      card.appendChild(meta);
-      if (s.metrics && s.metrics.length) {
-        const ul = create("ul", "system-metrics");
-        s.metrics.forEach((m) => ul.appendChild(create("li", "", escape(m))));
-        card.appendChild(ul);
-      }
-      if (s.link) {
-        const a = create("a", "system-visit", "Visit site");
-        a.href = s.link;
-        a.target = "_blank";
-        a.rel = "noopener";
-        card.appendChild(a);
-      }
-      wrap.appendChild(card);
+    const groups = (cats && cats.length) ? cats : [{ name: "All systems", blurb: "" }];
+    groups.forEach((g, i) => {
+      const items = list.filter((s) => (s.category || "All systems") === g.name);
+      if (!items.length) return;
+      const drawer = create("details", "system-drawer");
+      if (i === 0) drawer.open = true;
+      const sum = create("summary", "drawer-head");
+      const text = create("div", "drawer-text");
+      text.appendChild(create("h3", "drawer-title",
+        '<span class="title-tag">' + String(i + 1).padStart(2, "0") + "</span> " + escape(g.name)));
+      if (g.blurb) text.appendChild(create("p", "drawer-blurb", escape(g.blurb)));
+      text.appendChild(create("p", "drawer-peek", items.map((s) => escape(s.title)).join("  /  ")));
+      sum.appendChild(text);
+      const side = create("div", "drawer-side");
+      side.appendChild(create("span", "drawer-count", items.length + (items.length === 1 ? " system" : " systems")));
+      side.appendChild(create("span", "drawer-icon", "+"));
+      sum.appendChild(side);
+      drawer.appendChild(sum);
+      const grid = create("div", "systems-grid drawer-body");
+      items.forEach((s) => grid.appendChild(systemCard(s)));
+      drawer.appendChild(grid);
+      wrap.appendChild(drawer);
     });
   }
 
@@ -192,7 +216,7 @@
     setSyncStatus(data.meta.last_synced_utc);
     hydrateHero(data);
     hydrateHeadliners(data.headliners);
-    hydrateSystems(data.shipped_systems);
+    hydrateSystems(data.shipped_systems, data.system_categories);
     hydrateCitadel(data.citadel_ramparts);
     hydrateBrain(data.brain_regions, data.empty_seats);
     hydrateAgents(data.agents);
